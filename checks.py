@@ -18,11 +18,11 @@ requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 #   "DNS name"    if the host is specified as a domain name
 #                  e.g. "machinelearningforkids.co.uk"
 def checkAddressType(addr):
-	segments = parse.urlparse(addr)
-	if re.search(IP_ADDR_REGEX, segments.hostname):
-		return "IP addr"
-	else:
-		return "DNS name"
+    segments = parse.urlparse(addr)
+    if re.search(IP_ADDR_REGEX, segments.hostname):
+        return "IP addr"
+    else:
+        return "DNS name"
 
 
 #
@@ -33,13 +33,13 @@ def checkAddressType(addr):
 #   "is 54-75"    if the address is between 54 and 75 characters long
 #   ">75 chars"   if the address is longer than 75 characters
 def checkUrlLength(addr):
-	length = len(addr)
-	if length < 54:
-		return "<54 chars"
-	elif length <= 75:
-		return "is 54-75"
-	else:
-		return ">75 chars"
+    length = len(addr)
+    if length < 54:
+        return "<54 chars"
+    elif length <= 75:
+        return "is 54-75"
+    else:
+        return ">75 chars"
 
 
 #
@@ -50,11 +50,11 @@ def checkUrlLength(addr):
 #   "yes"         if the address is using a shortening service
 #   "no"          if the address is not using a known service
 def checkShortening(addr):
-	segments = parse.urlparse(addr)
-	if segments.hostname in SHORTENING_SERVICES:
-		return "yes"
-	else:
-		return "no"
+    segments = parse.urlparse(addr)
+    if segments.hostname in SHORTENING_SERVICES:
+        return "yes"
+    else:
+        return "no"
 
 
 #
@@ -64,10 +64,10 @@ def checkShortening(addr):
 #   "yes"         if the address includes the @ symbol
 #   "no"          if the address does not include @
 def checkAtSign(addr):
-	if "@" in addr:
-		return "yes"
-	else:
-		return "no"
+    if "@" in addr:
+        return "yes"
+    else:
+        return "no"
 
 
 #
@@ -78,11 +78,11 @@ def checkAtSign(addr):
 #   "standard"    if the address uses port 80 or port 443
 #   "non-std"     if the address uses a custom, non-standard port
 def checkPortNumber(addr):
-	segments = parse.urlparse(addr)
-	if segments.port is None or segments.port == 80 or segments.port == 443:
-		return "standard"
-	else:
-		return "non-std"
+    segments = parse.urlparse(addr)
+    if segments.port is None or segments.port == 80 or segments.port == 443:
+        return "standard"
+    else:
+        return "non-std"
 
 
 #
@@ -92,23 +92,23 @@ def checkPortNumber(addr):
 #   "< 6 month"   if the domain was registered less than 6 months ago
 #   "older"       if the domain registration is older than 6 months
 def checkDomainAge(addr):
-	try:
-		registration = whois.whois(addr)
-		created = registration.creation_date
-		if created is not None:
-			if isinstance(created, list):
-				created = created[0]
-			if isinstance(created, str):
-				if created.startswith("before "):
-					created = created[7:]
-				created = dateutilparse(created)
-			if isinstance(created, datetime.date):
-				age = (datetime.datetime.now() - created).days
-				if age > 180:
-					return "older"
-	except whois.parser.PywhoisError:
-		pass
-	return "< 6 month"
+    try:
+        registration = whois.whois(addr)
+        created = registration.creation_date
+        if created is not None:
+            if isinstance(created, list):
+                created = created[0]
+            if isinstance(created, str):
+                if created.startswith("before "):
+                    created = created[7:]
+                created = dateutilparse(created)
+            if isinstance(created, datetime.date):
+                age = (datetime.datetime.now() - created).days
+                if age > 180:
+                    return "older"
+    except whois.parser.PywhoisError:
+        pass
+    return "< 6 month"
 
 
 #
@@ -118,12 +118,12 @@ def checkDomainAge(addr):
 #   "<= 4"        if there are 4 or fewer redirects
 #   "> 4"         if there are more than 4 redirects
 def checkRedirects(addr):
-	try:
-		if len(requests.get(addr, allow_redirects=True, verify=False, timeout=10).history) <= 4:
-			return "<= 4"
-	except:
-		pass
-	return "> 4"
+    try:
+        if len(requests.get(addr, allow_redirects=True, verify=False, timeout=10).history) <= 4:
+            return "<= 4"
+    except:
+        pass
+    return "> 4"
 
 
 #
@@ -133,16 +133,16 @@ def checkRedirects(addr):
 #   "expiring"    if the domain is due to expire in less than a year
 #   "not"         if the domain has an expiration longer than a year
 def checkDomainRegistration(addr):
-	try:
-		registration = whois.whois(addr)
-		expiry = registration.expiration_date
-		if expiry is not None:
-			if isinstance(expiry, list):
-				expiry = expiry[0]
-			expiresin = (expiry - datetime.datetime.now()).days
-			if expiresin >= 365:
-				return "not"
-	except whois.parser.PywhoisError:
-		pass
-	return "expiring"
+    try:
+        registration = whois.whois(addr)
+        expiry = registration.expiration_date
+        if expiry is not None:
+            if isinstance(expiry, list):
+                expiry = expiry[0]
+            expiresin = (expiry - datetime.datetime.now()).days
+            if expiresin >= 365:
+                return "not"
+    except whois.parser.PywhoisError:
+        pass
+    return "expiring"
 

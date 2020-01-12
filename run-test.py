@@ -4,31 +4,31 @@ from mlforkids import classify
 MLFORKIDS_API_KEY = None
 
 def checkUrl(addr):
-	address_type = checkAddressType(addr)
-	url_length = checkUrlLength(addr)
-	shortening = checkShortening(addr)
-	includes_at = checkAtSign(addr)
-	port_number = checkPortNumber(addr)
-	domain_age = checkDomainAge(addr)
-	redirects = checkRedirects(addr)
-	domain_reg = checkDomainRegistration(addr)
+    address_type = checkAddressType(addr)
+    url_length = checkUrlLength(addr)
+    shortening = checkShortening(addr)
+    includes_at = checkAtSign(addr)
+    port_number = checkPortNumber(addr)
+    domain_age = checkDomainAge(addr)
+    redirects = checkRedirects(addr)
+    domain_reg = checkDomainRegistration(addr)
 
-	print (addr)
-	print ("   address type :", address_type)
-	print ("   url length   :", url_length)
-	print ("   shortening   :", shortening)
-	print ("   includes @   :", includes_at)
-	print ("   port number  :", port_number)
-	print ("   domain age   :", domain_age)
-	print ("   redirects    :", redirects)
-	print ("   domain reg   :", domain_reg)
+    print (addr)
+    print ("   address type :", address_type)
+    print ("   url length   :", url_length)
+    print ("   shortening   :", shortening)
+    print ("   includes @   :", includes_at)
+    print ("   port number  :", port_number)
+    print ("   domain age   :", domain_age)
+    print ("   redirects    :", redirects)
+    print ("   domain reg   :", domain_reg)
 
-	if MLFORKIDS_API_KEY is not None:
-		addr_data = [ address_type, url_length, shortening, includes_at, port_number, domain_age, redirects, domain_reg ]
-		prediction = classify(MLFORKIDS_API_KEY, addr_data)
-		print ("Prediction: %s is a %s link (%d%% confidence)" % (addr, prediction["class_name"], prediction["confidence"]))
+    if MLFORKIDS_API_KEY is not None:
+        addr_data = [ address_type, url_length, shortening, includes_at, port_number, domain_age, redirects, domain_reg ]
+        prediction = classify(MLFORKIDS_API_KEY, addr_data)
+        print ("Prediction: %s is a %s link (%d%% confidence)" % (addr, prediction["class_name"], prediction["confidence"]))
 
-	print ("")
+    print ("")
 
 
 checkUrl("https://machinelearningforkids.co.uk/help")
