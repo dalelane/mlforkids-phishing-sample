@@ -1,7 +1,7 @@
 from checks import checkAddressType, checkUrlLength, checkShortening, checkAtSign, checkPortNumber, checkDomainAge, checkRedirects, checkDomainRegistration
-from mlforkids import classify
+from mlforkidsnumbers import MLforKidsNumbers
 
-MLFORKIDS_API_KEY = None
+project = None
 
 def checkUrl(addr):
     address_type = checkAddressType(addr)
@@ -23,9 +23,20 @@ def checkUrl(addr):
     print ("   redirects    :", redirects)
     print ("   domain reg   :", domain_reg)
 
-    if MLFORKIDS_API_KEY is not None:
-        addr_data = [ address_type, url_length, shortening, includes_at, port_number, domain_age, redirects, domain_reg ]
-        prediction = classify(MLFORKIDS_API_KEY, addr_data)
+    addr_data = {
+        "address type" : address_type,
+        "url length" : url_length,
+        "shortening" : shortening,
+        "includes @" : includes_at,
+        "port number" : port_number,
+        "domain age" : domain_age,
+        "redirects" : redirects,
+        "domain reg" : domain_age,
+    }
+
+    if project is not None:
+        predictions = project.classify(addr_data)
+        prediction = predictions[0]
         print ("Prediction: %s is a %s link (%d%% confidence)" % (addr, prediction["class_name"], prediction["confidence"]))
 
     print ("")
