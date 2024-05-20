@@ -1,3 +1,9 @@
+# common requirements with mlforkidsnumbers
+tensorflow-decision-forests==1.9.0
+pandas==2.2.2
+requests==2.32.0
+
+# unique to phishing project
 certifi==2024.2.2
 chardet==5.2.0
 future==1.0.0
