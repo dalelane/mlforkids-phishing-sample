@@ -1,7 +1,7 @@
 # common requirements with mlforkidsnumbers
 tensorflow-decision-forests==1.9.0
 pandas==2.2.2
-requests==2.32.0
+requests==2.32.4
 
 # unique to phishing project
 certifi==2024.7.4
@@ -10,6 +10,6 @@ future==1.0.0
 idna==3.7
 python-dateutil==2.9.0.post0
 python-whois==0.9.4
-requests==2.32.0
+requests==2.32.4
 six==1.16.0
 urllib3==2.2.2
