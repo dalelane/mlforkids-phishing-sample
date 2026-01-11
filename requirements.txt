@@ -1,15 +1,15 @@
 # common requirements with mlforkidsnumbers
 ydf==0.12.0
-pandas==2.3.0
-requests==2.32.4
+pandas==2.3.3
+requests==2.32.5
 
 # unique to phishing project
-certifi==2025.6.15
+certifi==2026.1.4
 chardet==5.2.0
 future==1.0.0
-idna==3.10
+idna==3.11
 python-dateutil==2.9.0.post0
-python-whois==0.9.5
-requests==2.32.4
+python-whois==0.9.6
+requests==2.32.5
 six==1.17.0
-urllib3==2.5.0
+urllib3==2.6.3

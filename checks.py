@@ -103,10 +103,12 @@ def checkDomainAge(addr):
                     created = created[7:]
                 created = dateutilparse(created)
             if isinstance(created, datetime.date):
+                if isinstance(created, datetime.datetime) and created.tzinfo is not None:
+                    created = created.replace(tzinfo=None)
                 age = (datetime.datetime.now() - created).days
                 if age > 180:
                     return "older"
-    except whois.parser.PywhoisError:
+    except whois.exceptions.PywhoisError:
         pass
     return "< 6 month"
 
@@ -139,10 +141,12 @@ def checkDomainRegistration(addr):
         if expiry is not None:
             if isinstance(expiry, list):
                 expiry = expiry[0]
+            if isinstance(expiry, datetime.datetime) and expiry.tzinfo is not None:
+                expiry = expiry.replace(tzinfo=None)
             expiresin = (expiry - datetime.datetime.now()).days
             if expiresin >= 365:
                 return "not"
-    except whois.parser.PywhoisError:
+    except whois.exceptions.PywhoisError:
         pass
     return "expiring"
 
