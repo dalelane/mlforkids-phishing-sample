@@ -4,7 +4,7 @@ pandas==2.3.3
 requests==2.33.0
 
 # unique to phishing project
-certifi==2026.1.4
+certifi==2026.10.19
 chardet==5.2.0
 future==1.0.0
 idna==3.15
